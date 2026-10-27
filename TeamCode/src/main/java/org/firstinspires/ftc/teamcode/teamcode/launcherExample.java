@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@disable
 @TeleOp(name = "launcherExample", group = "StarterBot")
+@Disabled
 public class launcherExample extends OpMode {
 
     // Declare OpMode members.
