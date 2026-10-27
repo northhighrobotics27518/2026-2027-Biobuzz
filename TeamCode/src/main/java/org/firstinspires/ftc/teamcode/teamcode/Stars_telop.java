@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Stars_telop", group = "StarterBot")
-public class Stars_telop<DcMotor> extends OpMode {
+public class Stars_telop extends OpMode {
 
     // Declare OpMode members.
     private DcMotor leftFrontDrive = null;

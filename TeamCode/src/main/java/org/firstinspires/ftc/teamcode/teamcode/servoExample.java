@@ -18,6 +18,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 */
 package org.firstinspires.ftc.teamcode.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -32,8 +33,8 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Driver Station OpMode list, or add a @Disabled annotation to prevent this OpMode from being
  * added to the Driver Station.
  */
-@disable
 @TeleOp(name = "servoExample", group = "StarterBot")
+@Disabled
 public class servoExample extends OpMode {
     private Servo intakeServo = null;
     private static final double SERVO_BACKWARD = 0.25;
