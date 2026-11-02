@@ -22,6 +22,7 @@ public class Stars_telop extends OpMode {
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
+    double intakeMotorPower = 0.0;
     private static final double SERVO_FORWARD = 1.0;
     private static final double SERVO_BACKWARD = 0.0;
     private static final double SERVO_STOP = 0.5;
@@ -92,23 +93,26 @@ public class Stars_telop extends OpMode {
         mecanumDrive(forward, strafe, turn);
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
-        double intakeMotorPower = 0.0;
-        if (gamepad2.right_trigger > 0.5) {
-            intakeMotorPower = 1.0;
-        } else if (gamepad2.left_trigger > 0.5) {
-            intakeMotorPower = -1.0;
-        }
+        launcherPower = (gamepad2.right_trigger > 0.5) ? -1.0 : 0.0;
+
         intakeMotor.setPower(intakeMotorPower);
 
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            launcherPower = (launcherPower == 0.0) ? 1.0 : 0.0;
+            if (intakeMotorPower == 0.0) {
+                intakeMotorPower = 1.0;
+            } else if (intakeMotorPower == 1.0){
+                intakeMotorPower = -1.0;
+            } else if (intakeMotorPower == -1.0) {
+                intakeMotorPower = 0.0;
+            }
         }
+        intakeMotor.setPower(intakeMotorPower);
         launcher.setPower(launcherPower);
 
         // Intake servo (gamepad2): left bumper toggles backward/forward
         if (gamepad2.leftBumperWasPressed()) {
-            intakeState = (intakeState == IntakeState.BACKWARD) ? IntakeState.FORWARD : IntakeState.BACKWARD;
+            intakeState = (intakeState == IntakeState.BACKWARD) ? IntakeState.STOP : IntakeState.BACKWARD;
         }
 
         switch (intakeState) {
