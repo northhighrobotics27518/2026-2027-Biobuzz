@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Stars_telop", group = "StarterBot")
+@TeleOp(name = "test", group = "StarterBot")
 public class Stars_telop extends OpMode {
 
     // Declare OpMode members.
