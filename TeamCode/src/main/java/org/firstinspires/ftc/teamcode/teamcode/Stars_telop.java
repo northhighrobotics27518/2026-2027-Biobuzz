@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Stars_telop", group = "StarterBot")
-public class Stars_telop<DcMotor> extends OpMode {
+public class Stars_telop extends OpMode {
 
     // Declare OpMode members.
     private DcMotor leftFrontDrive = null;
@@ -21,6 +22,7 @@ public class Stars_telop<DcMotor> extends OpMode {
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
+    double intakeMotorDirection = 1.0;
     private static final double SERVO_FORWARD = 1.0;
     private static final double SERVO_BACKWARD = 0.0;
     private static final double SERVO_STOP = 0.5;
@@ -92,16 +94,17 @@ public class Stars_telop<DcMotor> extends OpMode {
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
         double intakeMotorPower = 0.0;
+        if (gamepad2.left_trigger > 0.5) {
+            intakeMotorPower = intakeMotorDirection;
+        }
         if (gamepad2.right_trigger > 0.5) {
-            intakeMotorPower = 1.0;
-        } else if (gamepad2.left_trigger > 0.5) {
-            intakeMotorPower = -1.0;
+            launcherPower = -0.7;
         }
         intakeMotor.setPower(intakeMotorPower);
 
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            launcherPower = (launcherPower == 0.0) ? 1.0 : 0.0;
+            intakeMotorDirection = (intakeMotorDirection == -1.0) ? 1.0 : -1.0;
         }
         launcher.setPower(launcherPower);
 
