@@ -16,19 +16,15 @@ public class Nebula_telop extends OpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor intakeMotor = null;
     private DcMotor launcher = null;
-    private Servo intakeServo = null;
+    private Servo windmillServo = null;
+    private Servo rightServo = null;
+    private Servo leftServo = null;
     // Set up a variable for each drive wheel to save power level for telemetry.
     double leftFrontPower;
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
     double intakeMotorPower = 0.0;
-    private static final double SERVO_FORWARD = 1.0;
-    private static final double SERVO_BACKWARD = 0.0;
-    private static final double SERVO_STOP = 0.5;
-
-    private enum IntakeState { STOP, FORWARD, BACKWARD }
-    private IntakeState intakeState = IntakeState.STOP;
     double launcherPower = 0.0;
 
     @Override
@@ -45,7 +41,9 @@ public class Nebula_telop extends OpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         launcher = hardwareMap.get(DcMotor.class, "launcher");
-        intakeServo = hardwareMap.get(Servo.class, "intakeServo");
+        windmillServo = hardwareMap.get(Servo.class, "windmillServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
 
         // Drive directions set from the wheel test so positive power drives every wheel forward
         leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -54,6 +52,9 @@ public class Nebula_telop extends OpMode {
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
         launcher.setDirection(DcMotor.Direction.FORWARD);
+        windmillServo.setDirection(Servo.Direction.FORWARD);
+        rightServo.setDirection(Servo.Direction.FORWARD);
+        leftServo.setDirection(Servo.Direction.REVERSE);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -65,7 +66,6 @@ public class Nebula_telop extends OpMode {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeServo.setPosition(SERVO_FORWARD);
 
         telemetry.addData("Status", "Initialized");
     }
@@ -97,27 +97,16 @@ public class Nebula_telop extends OpMode {
         intakeMotorPower = (gamepad2.left_trigger > 0.5) ? 1.0 : 0.0;
 
         launcher.setPower(launcherPower);
-        intakeServo.setPosition(launcherPower);
+        if (launcherPower != 0) {
+            windmillServo.setPosition(1);
+        }
         // Launcher (gamepad2): right bumper toggles on/off
         intakeMotor.setPower(intakeMotorPower);
+        if (intakeMotorPower == 1) {
+            rightServo.setPosition(intakeMotorPower);
+            leftServo.setPosition(intakeMotorPower);
+        }
 
-        // Intake servo (gamepad2): left bumper toggles backward/forward
-        if (gamepad2.leftBumperWasPressed()) {
-            intakeState = (intakeState == IntakeState.BACKWARD) ? IntakeState.STOP : IntakeState.BACKWARD;
-        }
-        intakeMotor.setPower(intakeMotorPower);
-        switch (intakeState) {
-            case FORWARD:
-                intakeServo.setPosition(SERVO_FORWARD);
-                break;
-            case BACKWARD:
-                intakeServo.setPosition(SERVO_BACKWARD);
-                break;
-            case STOP:
-            default:
-                intakeServo.setPosition(SERVO_STOP);
-                break;
-        }
         /*
          * Show motor powers on the Driver Station via telemetry.
          */
