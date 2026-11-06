@@ -29,7 +29,7 @@ public class Stars_telop extends OpMode {
 
     private enum IntakeState { STOP, FORWARD, BACKWARD }
     private IntakeState intakeState = IntakeState.STOP;
-    double launcherPower = 0.0;
+
 
     @Override
     public void init() {
@@ -93,6 +93,7 @@ public class Stars_telop extends OpMode {
         mecanumDrive(forward, strafe, turn);
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
+        double launcherPower = 0.0;
         double intakeMotorPower = 0.0;
         if (gamepad2.left_trigger > 0.5) {
             intakeMotorPower = intakeMotorDirection;

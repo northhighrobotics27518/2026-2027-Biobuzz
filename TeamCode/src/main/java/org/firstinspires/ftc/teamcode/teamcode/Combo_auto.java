@@ -87,7 +87,7 @@ public class Combo_auto extends LinearOpMode {
         double lfpower = -0.45;
         double lbpower = 0.45;
         double rfpower = 0.45;
-        double lpower = -0.45;
+        double rbpower = -0.45;
         sleep(timeMs/2);
         leftFrontDrive.setPower(0);
         rightFrontDrive.setPower(0);
@@ -144,7 +144,7 @@ public class Combo_auto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            drive(0.45, 0.45, 0.45, 0.45,30000); //drive forward for 1 second
+            drive(0.45, 0.45, 0.45, 0.45,30000); //drive forward for 1 second(1000ms =1second)
 
             //=== STEP3: Stop Everything ===
 

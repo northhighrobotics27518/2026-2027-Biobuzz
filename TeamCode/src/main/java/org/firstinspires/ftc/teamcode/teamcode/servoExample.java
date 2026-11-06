@@ -32,7 +32,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Driver Station OpMode list, or add a @Disabled annotation to prevent this OpMode from being
  * added to the Driver Station.
  */
-@disable
+//@disable
 @TeleOp(name = "servoExample", group = "StarterBot")
 public class servoExample extends OpMode {
     private Servo intakeServo = null;

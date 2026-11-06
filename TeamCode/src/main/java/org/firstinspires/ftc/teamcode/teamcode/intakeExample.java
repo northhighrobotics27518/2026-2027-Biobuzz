@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Driver Station OpMode list, or add a @Disabled annotation to prevent this OpMode from being
  * added to the Driver Station.
  */
-@disable
+//@disable
 @TeleOp(name = "intakeExample", group = "StarterBot")
 public class intakeExample extends OpMode {
     private DcMotor intakeMotor = null;
