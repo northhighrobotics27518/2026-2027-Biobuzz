@@ -22,9 +22,9 @@ public class Proto1 extends OpMode {
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
-    private static final double SERVO_FORWARD = 1.0;
-    private static final double SERVO_BACKWARD = 0.0;
-    private static final double SERVO_STOP = 0.5;
+    private static final double SERVO_FORWARD = 0.5;
+    private static final double SERVO_BACKWARD = 0.75;
+    private static final double SERVO_STOP = 1.0;
 
     private enum IntakeState { STOP, FORWARD, BACKWARD }
     private IntakeState intakeState = IntakeState.STOP;
@@ -94,15 +94,15 @@ public class Proto1 extends OpMode {
         // Intake motor (gamepad2): right trigger = in, left trigger = out
         double intakeMotorPower = 0.0;
         if (gamepad2.right_trigger > 0.5) {
-            intakeMotorPower = 1.0;
+            intakeMotorPower = 1.0; //Change this value to 1.0 for max power inward
         } else if (gamepad2.left_trigger > 0.5) {
-            intakeMotorPower = -1.0;
+            intakeMotorPower = -1.0; //Change this value to -1.0 for max power outward
         }
         intakeMotor.setPower(intakeMotorPower);
 
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            launcherPower = (launcherPower == 0.0) ? 1.0 : 0.0;
+            launcherPower = (launcherPower == 0.0) ? 0.63 : 0.0; //Change *0.a* : 0.0 to change the power of launcher
         }
         launcher.setPower(launcherPower);
 
