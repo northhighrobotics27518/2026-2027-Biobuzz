@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Proto1", group = "StarterBot")
+@TeleOp(name = "Proto1_", group = "StarterBot")
 public class Proto1 extends OpMode {
 
     // Declare OpMode members.
