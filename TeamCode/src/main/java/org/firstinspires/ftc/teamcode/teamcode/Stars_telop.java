@@ -16,20 +16,22 @@ public class Stars_telop extends OpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor intakeMotor = null;
     private DcMotor launcher = null;
-    private Servo intakeServo = null;
     // Set up a variable for each drive wheel to save power level for telemetry.
     double leftFrontPower;
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
     double intakeMotorPower = 0.0;
-    private static final double SERVO_FORWARD = 1.0;
-    private static final double SERVO_BACKWARD = 0.0;
-    private static final double SERVO_STOP = 0.5;
 
+    private static final double SERVO_FORWARD = 0.3;
+    private static final double SERVO_BACKWARD = 0.6;
+    private static final double SERVO_STOP = 0.6;
     private enum IntakeState { STOP, FORWARD, BACKWARD }
     private IntakeState intakeState = IntakeState.STOP;
     double launcherPower = 0.0;
+    double reverse = 1.0;
+
+    private Servo intakeServo = null;
 
     @Override
     public void init() {
@@ -46,14 +48,13 @@ public class Stars_telop extends OpMode {
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         launcher = hardwareMap.get(DcMotor.class, "launcher");
         intakeServo = hardwareMap.get(Servo.class, "intakeServo");
-
         // Drive directions set from the wheel test so positive power drives every wheel forward
         leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
-        launcher.setDirection(DcMotor.Direction.FORWARD);
+        launcher.setDirection(DcMotor.Direction.REVERSE);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -65,8 +66,6 @@ public class Stars_telop extends OpMode {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeServo.setPosition(SERVO_FORWARD);
-
         telemetry.addData("Status", "Initialized");
     }
 
@@ -93,26 +92,28 @@ public class Stars_telop extends OpMode {
         mecanumDrive(forward, strafe, turn);
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
-        launcherPower = (gamepad2.right_trigger > 0.5) ? -1.0 : 0.0;
-
+        launcherPower = (gamepad2.right_trigger > 0.5) ? 0.75 : 0.0;
+        launcher.setPower(launcherPower);
+        intakeMotorPower = (gamepad2.left_trigger > 0.5) ? reverse : 0.0;
         intakeMotor.setPower(intakeMotorPower);
-
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            if (intakeMotorPower == 0.0) {
-                intakeMotorPower = 1.0;
-            } else if (intakeMotorPower == 1.0){
-                intakeMotorPower = -1.0;
-            } else if (intakeMotorPower == -1.0) {
-                intakeMotorPower = 0.0;
-            }
+            reverse = (reverse == 1.0) ? -1.0 : 1.0;
         }
-        intakeMotor.setPower(intakeMotorPower);
-        launcher.setPower(launcherPower);
 
         // Intake servo (gamepad2): left bumper toggles backward/forward
+
+
+
+        /*
+         * Show motor powers on the Driver Station via telemetry.
+         */
+        telemetry.addData("Motors", "FL (%.2f), FR (%.2f), BL(%.2f), BR(%.2f)",
+                leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
+        telemetry.addData("Intake Motor Power", "%.2f", intakeMotorPower);
+
         if (gamepad2.leftBumperWasPressed()) {
-            intakeState = (intakeState == IntakeState.BACKWARD) ? IntakeState.STOP : IntakeState.BACKWARD;
+            intakeState = (intakeState == IntakeState.BACKWARD) ? IntakeState.FORWARD : IntakeState.BACKWARD;
         }
 
         switch (intakeState) {
@@ -127,13 +128,6 @@ public class Stars_telop extends OpMode {
                 intakeServo.setPosition(SERVO_STOP);
                 break;
         }
-
-        /*
-         * Show motor powers on the Driver Station via telemetry.
-         */
-        telemetry.addData("Motors", "FL (%.2f), FR (%.2f), BL(%.2f), BR(%.2f)",
-                leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
-        telemetry.addData("Intake Motor Power", "%.2f", intakeMotorPower);
     }
 
     @Override

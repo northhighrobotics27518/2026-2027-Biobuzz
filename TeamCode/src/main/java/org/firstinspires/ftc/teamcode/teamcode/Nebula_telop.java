@@ -86,14 +86,14 @@ public class Nebula_telop extends OpMode {
          *   Left stick left/right -> strafe left/right
          *   Right stick left/right -> turn left/right
          */
-        double forward = -gamepad1.left_stick_y;
-        double strafe = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
+        double forward = gamepad1.left_stick_y;
+        double strafe = -gamepad1.left_stick_x;
+        double turn = -gamepad1.right_stick_x;
 
         mecanumDrive(forward, strafe, turn);
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
-        launcherPower = (gamepad2.right_trigger > 0.5) ? -0.74 : 0.0;
+        launcherPower = (gamepad2.right_trigger > 0.5) ? 0.74 : 0.0;
         intakeMotorPower = (gamepad2.left_trigger > 0.5) ? 1.0 : 0.0;
 
         launcher.setPower(launcherPower);
@@ -127,10 +127,10 @@ public class Nebula_telop extends OpMode {
          */
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
 
-        leftFrontPower = (forward + strafe + rotate) / denominator;
-        rightFrontPower = (forward - strafe - rotate) / denominator;
-        leftBackPower = (forward - strafe + rotate) / denominator;
-        rightBackPower = (forward + strafe - rotate) / denominator;
+        leftFrontPower = (forward - strafe + rotate) / denominator;
+        rightFrontPower = (forward + strafe - rotate) / denominator;
+        leftBackPower = (forward + strafe + rotate) / denominator;
+        rightBackPower = (forward - strafe - rotate) / denominator;
 
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
