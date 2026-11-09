@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.teamcode;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -27,7 +26,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name = "Combo_auto", group = "StarterBot")
-@Disabled
+//@Disabled
 public class Combo_auto extends LinearOpMode {
     final double FEED_TIME_SECONDS = 0.20; //The feeder servos run this long when a shot is requested.
     final double STOP_SPEED = 0.0; //We send this power to the servos when we want them to stop.
@@ -88,7 +87,7 @@ public class Combo_auto extends LinearOpMode {
         double lfpower = -0.45;
         double lbpower = 0.45;
         double rfpower = 0.45;
-        double rbpower = -0.45;
+        double lpower = -0.45;
         sleep(timeMs/2);
         leftFrontDrive.setPower(0);
         rightFrontDrive.setPower(0);
@@ -145,7 +144,7 @@ public class Combo_auto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            drive(0.45, 0.45, 0.45, 0.45,30000); //drive forward for 1 second(1000ms =1second)
+            drive(0.45, 0.45, 0.45, 0.45,30000); //drive forward for 1 second
 
             //=== STEP3: Stop Everything ===
 
