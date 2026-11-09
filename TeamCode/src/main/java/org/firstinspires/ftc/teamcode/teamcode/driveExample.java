@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+@disable
 @TeleOp(name = "driveExample", group = "StarterBot")
-@Disabled
 public class driveExample extends OpMode {
 
     // Declare OpMode members.
@@ -20,9 +19,6 @@ public class driveExample extends OpMode {
     double rightFrontPower;
     double leftBackPower;
 
-    double rightBackPower;
-
-    double intakeMotorPower;
     @Override
     public void init() {
 
