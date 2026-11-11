@@ -89,7 +89,7 @@ public class Proto1 extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        mecanumDrive(forward, strafe, turn);
+        mecanumDrive(turn, strafe, forward);
 
         // Intake motor (gamepad2): right trigger = in, left trigger = out
         double intakeMotorPower = 0.0;
@@ -102,7 +102,7 @@ public class Proto1 extends OpMode {
 
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            launcherPower = (launcherPower == 0.0) ? 0.73 : 0.0; //Change *0.a* : 0.0 to change the power of launcher
+            launcherPower = (launcherPower == 0.0) ? 0.58 : 0.0; //Change *0.a* : 0.0 to change the power of launcher
         }
         launcher.setPower(launcherPower);
 
