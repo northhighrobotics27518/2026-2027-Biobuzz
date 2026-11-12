@@ -102,7 +102,7 @@ public class Proto1 extends OpMode {
 
         // Launcher (gamepad2): right bumper toggles on/off
         if (gamepad2.rightBumperWasPressed()) {
-            launcherPower = (launcherPower == 0.0) ? 0.58 : 0.0; //Change *0.a* : 0.0 to change the power of launcher
+            launcherPower = (launcherPower == 0.0) ? 0.655 : 0.0; //Change *0.a* : 0.0 to change the power of launcher
         }
         launcher.setPower(launcherPower);
 
